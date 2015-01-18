@@ -15,10 +15,13 @@ class Fetcher
     (1..MAX_PAGE).each do |index|
       remote_result = Fetcher.get("#{BASE_URL}?page=#{index}")
       puts "== result: #{remote_result}"
-      doc = Nokogiri::HTML(remote_result)
-      doc.css('.blog_title h3 a').map { |a|
-	puts  a.attr('href') 
-      }
     end
   end
+
+  private
+  def self.extract_post_link content
+      return Nokogiri::HTML(content).css('.blog_title h3 a').map { |a|
+	a.attr('href') 
+      }
+  end 
 end
