@@ -17,6 +17,7 @@ class Fetcher
       remote_result = Fetcher.get("#{BASE_URL}?page=#{index}").body
       your_post_urls += self.extract_post_link remote_result
     end
+puts "== your_post_urls: #{your_post_urls.inspect}"
     your_post_urls.each  do |url|
       information = self.extract_post_information_from_single_page url
       insert_as_local_posts(information)
@@ -25,9 +26,10 @@ class Fetcher
 
   private
   def self.insert_as_local_posts information
-     # FIXME insert to our local database
-     # Blog.create :content => information[:content], :title => information[:title], 
-     #   :created_at => information[:created_at]
+    LocalBlog.create! :body=> information[:content], :title => information[:title],
+        :created_at => information[:created_at],
+        :published_at => information[:created_at],
+        :user_id => 1
   end
   def self.extract_post_link content
     return Nokogiri::HTML(content).css('.blog_title h3 a').map { |a|

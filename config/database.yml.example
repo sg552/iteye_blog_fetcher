@@ -1,0 +1,21 @@
+development: &development
+  adapter: mysql2
+  host: localhost
+  username: root
+  password:
+  database: siwei_cms
+
+test: &test
+  adapter: mysql2
+  host: localhost
+  username: root
+  password:
+  database: siwei_cms_test
+
+production: &production
+  adapter: mysql2
+  host: localhost
+  database: siwei_cms
+  username: root
+  password:
+
